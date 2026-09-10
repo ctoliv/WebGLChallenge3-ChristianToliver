@@ -18,12 +18,16 @@ window.addEventListener("keydown", (event) => {
     //KEYS FOR ORTHO AND PERSPECTIVE
     if (event.key.toLowerCase() === "p") {
         activeCamera = perspectiveCamera;
+        controls.object = perspectiveCamera;
+        controls.update();
         cameraLabel.textContent = "Current Camera; Perspective";
         renderer.render(scene, activeCamera);
     }
 
     if (event.key.toLowerCase() === "o") {
         activeCamera = orthoCamera;
+        controls.object = orthoCamera;
+        controls.update();
         cameraLabel.textContent = "Current Camera; Orthographic";
         renderer.render(scene, activeCamera);
     }
@@ -132,7 +136,14 @@ function resizeRenderer() {
     perspectiveCamera.updateProjectionMatrix();
 }
 
+function animate() {
+    requestAnimationFrame(animate);
 
+    controls.update();
+
+    renderer.render(scene, activeCamera);
+}
+animate();
 
 window.addEventListener("resize", resizeRenderer);
 resizeRenderer();
