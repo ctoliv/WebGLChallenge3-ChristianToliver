@@ -26,6 +26,19 @@ scene.background = new THREE.Color(0x87ceeb);
 const perspectiveCamera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
 perspectiveCamera.position.set(0, 8, 16);
 
+const orthoCamera = new THREE.OrthographicCamera(
+    -10,
+    10,
+    10,
+    -10,
+    0.1,
+    100
+
+);
+
+orthoCamera.position.set(0, 5, 15);
+orthoCamera.lookAt(0,1,0);
+
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setSize(Math.min(window.innerWidth * 0.9, 900), 600);
