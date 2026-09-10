@@ -14,6 +14,16 @@ window.addEventListener("keydown", (event) => {
             zoomCamera(event.key === "ArrowUp" ? -1 : 1);
         }
     }
+    //KEYS FOR ORTHO AND PERSPECTIVE
+    if (event.key.toLowerCase() === "p") {
+        activeCamera = perspectiveCamera;
+        renderer.render(scene, activeCamera);
+    }
+
+    if (event.key.toLowerCase() === "o") {
+        activeCamera = orthoCamera;
+        renderer.render(scene, activeCamera);
+    }
 });
 
 window.addEventListener("keyup", (event) => {
@@ -36,8 +46,10 @@ const orthoCamera = new THREE.OrthographicCamera(
 
 );
 
-orthoCamera.position.set(0, 5, 15);
+orthoCamera.position.set(0, 8, 16);
 orthoCamera.lookAt(0,1,0);
+
+let activeCamera = perspectiveCamera;
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -119,5 +131,5 @@ function resizeRenderer() {
 
 window.addEventListener("resize", resizeRenderer);
 resizeRenderer();
-renderer.render(scene, perspectiveCamera);
+renderer.render(scene, activeCamera);
 
