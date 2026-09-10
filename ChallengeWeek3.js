@@ -23,8 +23,8 @@ window.addEventListener("keyup", (event) => {
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x87ceeb);
 
-const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
-camera.position.set(0, 8, 16);
+const perspectiveCamera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
+perspectiveCamera.position.set(0, 8, 16);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -33,7 +33,7 @@ renderer.domElement.style.display = "block";
 renderer.domElement.style.marginTop = "1rem";
 container.appendChild(renderer.domElement);
 
-const controls = new OrbitControls(camera, renderer.domElement);
+const controls = new OrbitControls(perspectiveCamera, renderer.domElement);
 controls.enableDamping = true;
 controls.target.set(0, 1, 0);
 
@@ -42,16 +42,16 @@ const minZoomDistance = 4;
 const maxZoomDistance = 40;
 
 function zoomCamera(direction) {
-    const cameraOffset = camera.position.clone().sub(controls.target);
+    const cameraOffset = perspectiveCamera.position.clone().sub(controls.target);
     const zoomDistance = THREE.MathUtils.clamp(
         cameraOffset.length() + direction * zoomStep,
         minZoomDistance,
         maxZoomDistance
     );
 
-    camera.position.copy(controls.target).add(cameraOffset.normalize().multiplyScalar(zoomDistance));
+    perspectiveCamera.position.copy(controls.target).add(cameraOffset.normalize().multiplyScalar(zoomDistance));
     controls.update();
-    renderer.render(scene, camera);
+    renderer.render(scene, perspectiveCamera);
 }
 
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
@@ -100,11 +100,11 @@ function resizeRenderer() {
     const width = Math.min(window.innerWidth * 0.9, 900);
     const height = 600;
     renderer.setSize(width, height);
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
+    perspectiveCamera.aspect = width / height;
+    perspectiveCamera.updateProjectionMatrix();
 }
 
 window.addEventListener("resize", resizeRenderer);
 resizeRenderer();
-renderer.render(scene, camera);
+renderer.render(scene, perspectiveCamera);
 
