@@ -1,5 +1,6 @@
 import * as THREE from "https://unpkg.com/three@0.179.1/build/three.module.js";
 import { OrbitControls } from "https://unpkg.com/three@0.179.1/examples/jsm/controls/OrbitControls.js";
+const cameraLabel = document.getElementById("camera-label");
 
 const container = document.getElementById("scene-container") || document.body;
 const pressedKeys = new Set();
@@ -17,11 +18,13 @@ window.addEventListener("keydown", (event) => {
     //KEYS FOR ORTHO AND PERSPECTIVE
     if (event.key.toLowerCase() === "p") {
         activeCamera = perspectiveCamera;
+        cameraLabel.textContent = "Current Camera; Perspective";
         renderer.render(scene, activeCamera);
     }
 
     if (event.key.toLowerCase() === "o") {
         activeCamera = orthoCamera;
+        cameraLabel.textContent = "Current Camera; Orthographic";
         renderer.render(scene, activeCamera);
     }
 });
@@ -128,6 +131,8 @@ function resizeRenderer() {
     perspectiveCamera.aspect = width / height;
     perspectiveCamera.updateProjectionMatrix();
 }
+
+
 
 window.addEventListener("resize", resizeRenderer);
 resizeRenderer();
